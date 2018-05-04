@@ -1,0 +1,42 @@
+##当前项目的applicationName
+current.application.name: config-server
+##当前项目暴露端口
+current.application.port: 8888
+##eureka地址
+dev.eureka.zone: http://localhost:8761/eureka/
+test.eureka.zone: http://test-eureka:8761/eureka/
+
+
+##配置模板
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+
+server:
+  port: ${current.application.port}
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: ${current.application.name}
+
+---
+spring:
+  profiles: dev
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${dev.eureka.zone}
+---
+spring:
+  profiles: test
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${test.eureka.zone}
